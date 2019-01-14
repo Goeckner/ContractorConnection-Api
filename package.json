@@ -1,0 +1,22 @@
+{
+  "name": "contractorconnection-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Goeckner/ContractorConnection-Api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Goeckner/ContractorConnection-Api/issues"
+  },
+  "homepage": "https://github.com/Goeckner/ContractorConnection-Api#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
