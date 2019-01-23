@@ -1,12 +1,12 @@
 var sql = require('./db.js')
 
 var User = function(user){
-    this.user = user.user
-    this.status = user.status
-}
-var Instructor = function(inst){
-    this.inst = inst.inst
-    this.status = inst.status
+    this.name = user.name
+    this.id = user.id
+    this.username = user.username
+    this.password = user.password
+    this.email = user.email
+    this.isTrainer = user.isTrainer
 }
 
 User.createUser = function createUser(newUser, result){
@@ -49,8 +49,8 @@ User.getUserbyID = function getUserbyID(UserID, result){
 }
 
 //needs work, need better way to update user
-User.updateUserInfo = function updateUserInfo(existingUser, result){
-    sql.query("UPDATE users SET", existingUser, function(err,res){
+User.updateUserInfo = function updateUserInfo(id, existingUser, result){
+    sql.query("UPDATE users SET ? where id = ?", [existingUser, id], function(err,res){
         if(err) {
             console.log("error: ", err)
             result(err, null)
@@ -61,3 +61,18 @@ User.updateUserInfo = function updateUserInfo(existingUser, result){
         }
     })
 }
+
+User.removeUser = function removeUser(id, result){
+    sql.query("DELETE FROM users WHERE id = ?", [id], function(err,res){
+        if(err) {
+            console.log("error: ", err)
+            result(err, null)
+        }
+        else{
+            console.log(res)
+            result(null, res)
+        }
+    })
+}
+
+module.exports = User
