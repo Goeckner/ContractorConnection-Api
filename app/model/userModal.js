@@ -10,14 +10,14 @@ var User = function(user){
 }
 
 User.createUser = function createUser(newUser, result){
-    sql.query("INSERT INTO users (id, name, username, password, email, isTrainer) VALUES ?", newUser, function(err, res){
+    sql.query("INSERT INTO users (id, name, username, password, email, isTrainer) VALUES (?)", newUser, function(err, res){
         if(err) {
             console.log("error: ", err);
             result(err, null);
         }
         else{
-            console.log(res.insertID);
-            result(null, res.insertID);
+            console.log(res.insertId);
+            result(null, res.insertId);
         }
     })
 }
