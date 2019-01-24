@@ -3,7 +3,7 @@ module.exports = function(app) {
 
     app.route('/users')
         .get(react_app.get_all_users)
-    //     .post(react_app.create_user)
+        .post(react_app.create_user)
 
     // app.route('/users/:userid')
     //     .get(react_app.list_user_info)

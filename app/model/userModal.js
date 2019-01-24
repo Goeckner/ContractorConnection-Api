@@ -1,8 +1,8 @@
 var sql = require('./db.js')
 
 var User = function(user){
-    this.name = user.name
     this.id = user.id
+    this.name = user.name    
     this.username = user.username
     this.password = user.password
     this.email = user.email
@@ -10,7 +10,7 @@ var User = function(user){
 }
 
 User.createUser = function createUser(newUser, result){
-    sql.query("INSERT INTO users (name, username, password, email, isTrainer) VALUES ?", newUser, function(err, res){
+    sql.query("INSERT INTO users (id, name, username, password, email, isTrainer) VALUES ?", newUser, function(err, res){
         if(err) {
             console.log("error: ", err);
             result(err, null);
