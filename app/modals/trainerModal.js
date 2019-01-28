@@ -13,6 +13,7 @@ var Trainer = function(trainer){
     this.longitude = trainer.longitude
     this.shortDesc = trainer.shortDesc
     this.trainerID = trainer.trainerID
+    this.rating = trainer.rating
 }
 
 Trainer.createTrainer = function createTrainer(newTrainer, result){

@@ -7,7 +7,7 @@ module.exports = function(app) {
 
     // app.route('/users/:userid')
     //     .get(react_app.list_user_info)
-    //     .put(react_app.update_user_info)
+    //     .post(react_app.update_user_info)
     //     .delete(react_app.delete_user)
 
     app.route('/trainers')
@@ -18,6 +18,9 @@ module.exports = function(app) {
     //     .get(react_app.list_instructor_info)
     //     .put(react_app.update_instructor_info)
     //     .delete(react_app.delete_instructor)
+
+    app.route('/trainers/filter')
+        .post(react_app.get_filtered_inst)
 
     // app.route('/dist')
     //     .post(react_app.calculate_distance)

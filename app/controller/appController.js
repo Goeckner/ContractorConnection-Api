@@ -1,5 +1,6 @@
-var User =  require("../modals/userModal.js")
+var User =  require("../modals/userModal")
 var Trainer = require("../modals/trainerModal")
+var Filter = require("../modals/filterModal")
 
 //////////USER CONTROLLERS//////////
 exports.get_all_users = function(req, res) {
@@ -35,7 +36,7 @@ exports.create_user = function(req, res) {
 exports.create_instructor = function(req, res) {
     var new_trainer = new Trainer(req.body)
     var trainer_query = [[new_trainer.address, new_trainer.isCertified, new_trainer.fullDesc, new_trainer.company, new_trainer.phone,
-    new_trainer.city, new_trainer.state, new_trainer.zipcode, new_trainer.latitude, new_trainer.longitude, new_trainer.shortDesc, new_trainer.trainerID]]
+    new_trainer.city, new_trainer.state, new_trainer.zipcode, new_trainer.latitude, new_trainer.longitude, new_trainer.shortDesc, new_trainer.trainerID, new_trainer.rating]]
 
     if(!new_trainer){
         res.status(400).send({error:true, message: "Incomplete trainer information"})
@@ -59,5 +60,18 @@ exports.get_all_instructors = function(req, res) {
             res.send(err);
             console.log('res',trainer);
         res.send(trainer);
+    })
+}
+
+//////////FILTER CONTROLLERS//////////
+
+exports.get_filtered_inst = function(req, res) {
+    var new_filter = new Filter(req.body)
+    Filter.getFilterInst(new_filter, function(err, filter){
+        console.log("Controller: getfilterinst")
+        if(err)
+            res.send(err)
+            console.log('res', filter)
+        res.send(filter)
     })
 }
