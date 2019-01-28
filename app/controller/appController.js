@@ -67,11 +67,11 @@ exports.get_all_instructors = function(req, res) {
 
 exports.get_filtered_inst = function(req, res) {
     var new_filter = new Filter(req.body)
+    console.log("new filter here", new_filter)
     Filter.getFilterInst(new_filter, function(err, filter){
         console.log("Controller: getfilterinst")
         if(err)
             res.send(err)
-            console.log('res', filter)
         res.send(filter)
     })
 }
