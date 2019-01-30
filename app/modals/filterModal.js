@@ -60,7 +60,7 @@ Filter.getFilterInst = function getFilterInst(new_filter, result){
             }            
             result(null, endlist)
         }
-    })    
+    })
 }
 
 module.exports = Filter

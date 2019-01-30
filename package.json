@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Goeckner/ContractorConnection-Api#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "geolib": "^2.0.24",
