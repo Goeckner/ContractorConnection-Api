@@ -9,13 +9,35 @@ var Filter = function(filter){
     this.dist = filter.dist
 }
 
+var fullTrainer = function(fulltrainer){
+    this.id = fulltrainer.id
+    this.name = fulltrainer.name    
+    this.username = fulltrainer.username
+    this.password = fulltrainer.password
+    this.email = fulltrainer.email
+    this.isTrainer = fulltrainer.isTrainer
+    this.address = fulltrainer.address
+    this.isCertified = fulltrainer.isCertified
+    this.fullDesc = fulltrainer.fullDesc
+    this.company = fulltrainer.company
+    this.phone = fulltrainer.phone
+    this.city = fulltrainer.city
+    this.state = fulltrainer.state
+    this.zipcode = fulltrainer.zipcode
+    this.latitude = fulltrainer.latitude
+    this.longitude = fulltrainer.longitude
+    this.shortDesc = fulltrainer.shortDesc
+    this.trainerID = fulltrainer.trainerID
+    this.rating = fulltrainer.rating
+}
+
 //filters the full list of instructors with both ratings and distance
 Filter.getFilterInst = function getFilterInst(new_filter, result){
     var endlist = new Array()
     var list
 
     //gets all trainers who meet the rating requirement
-    sql.query("SELECT * FROM trainers INNER JOIN users ON users.id = trainers.trainerID WHERE trainers.rating >= ? AND trainers.isCertified = 1", [[new_filter.rating]], function(err,res){
+    sql.query("SELECT * FROM users INNER JOIN trainers ON users.id = trainers.trainerID WHERE trainers.rating >= ?", [[new_filter.rating]], function(err,res){
         if(err) {
             console.log("error: ", err)
             result(err, null)
@@ -26,7 +48,7 @@ Filter.getFilterInst = function getFilterInst(new_filter, result){
 
             //0 is the assumed null value, technically it's where the prime meridian meets the equator but thats in the
             //middle of the ocean, nobody should live there
-            if(parseFloat(new_filter.latitude) == 0 || parseFloat(new_filter.longitude) == "0.0"){
+            if(parseFloat(new_filter.latitude) == 0 || parseFloat(new_filter.longitude) == 0 || new_filter.dist == "No Max"){
                 endlist = list
             }
             else{
@@ -38,7 +60,7 @@ Filter.getFilterInst = function getFilterInst(new_filter, result){
                         
                         if(list[i].latitude != "0.0" && list[i].longitude != "0.0" && list[i].latitude != '' && list[i].longitude != '')
                         {
-                            var temp = new Trainer(list[i])
+                            var temp = new fullTrainer(list[i])
 
                             //uses geolib to get distance from each intructor
                             var dist = geolib.getDistance({latitude: parseFloat(new_filter.latitude), longitude: parseFloat(new_filter.longitude)},
