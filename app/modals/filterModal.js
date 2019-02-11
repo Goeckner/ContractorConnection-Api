@@ -52,7 +52,6 @@ Filter.getFilterInst = function getFilterInst(new_filter, result){
                 endlist = list
             }
             else{
-                
                 for(i = 0; i < list.length; i++)
                 {
                     //try catch incase of error with coordinates, geolib is picky with values
@@ -63,13 +62,13 @@ Filter.getFilterInst = function getFilterInst(new_filter, result){
                             var temp = new fullTrainer(list[i])
 
                             //uses geolib to get distance from each intructor
-                            var dist = geolib.getDistance({latitude: parseFloat(new_filter.latitude), longitude: parseFloat(new_filter.longitude)},
+                            var dista = geolib.getDistance({latitude: parseFloat(new_filter.latitude), longitude: parseFloat(new_filter.longitude)},
                             {latitude: parseFloat(temp.latitude), longitude: parseFloat(temp.longitude)})
 
                             //converting meters to miles
-                            dist = dist / 1609.34
-                            console.log(dist)
-                            if(dist <= new_filter.dist)
+                            dista = dista / 1609.34
+                            console.log(dista)
+                            if(dista <= parseFloat(new_filter.dist))
                             {
                                 endlist.push(temp)
                             }
