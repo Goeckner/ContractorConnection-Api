@@ -1,3 +1,5 @@
+const passport = require('passport')
+
 module.exports = function(app) {
     var react_app = require("../controller/appController.js")
 
@@ -21,4 +23,23 @@ module.exports = function(app) {
 
     app.route('/trainers/filter')
         .post(react_app.get_filtered_inst)
+
+    app.route('/auth/facebook')
+        .get(passport.authenticate('facebook'))
+
+    app.route('/auth/facebook/callback')
+        .get(passport.authenticate('facebook', {
+            
+            successRedirect: 'http://localhost:3000',
+            failureRedirect: '/login'
+        }),
+        function(req, res) {
+            res.redirect('/)')
+        })
+
+    app.route('/logout')
+        .get(function(req, res){
+        req.logout();
+        res.redirect('/');
+    })
 }
