@@ -24,6 +24,7 @@ module.exports = function(app) {
     app.route('/trainers/filter')
         .post(react_app.get_filtered_inst)
 
+    ////////FACEBOOK ROUTES///////
     app.route('/auth/facebook')
         .get(passport.authenticate('facebook'))
 
@@ -34,7 +35,18 @@ module.exports = function(app) {
             failureRedirect: '/login'
         }),
         function(req, res) {
-            res.redirect('/)')
+            res.redirect('/')
+        })
+
+    ////////GOOGLE ROUTES////////
+    app.route('/auth/google')
+        .get(passport.authenticate("google", { scope: ["profile", "email"] }))
+
+    app.route('/auth/google/callback')
+        .get(passport.authenticate("google", { failureRedirect: "/", session: false }),
+            function(req, res) {
+                var token = req.user.token;
+                res.redirect("http://localhost:3000?token=" + token);
         })
 
     app.route('/logout')

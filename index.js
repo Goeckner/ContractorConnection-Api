@@ -8,6 +8,7 @@ const cors = require('cors')
 require('dotenv').config()
 var passport = require("passport")
 var FacebookStrategy = require("passport-facebook").Strategy
+var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -15,6 +16,8 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
+
+
 
 passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_ID,
@@ -29,6 +32,25 @@ function(accessToken, refreshToken, profile, done) {
   });
 }
 ));
+passport.use(
+	new GoogleStrategy(
+		{
+			clientID: process.env.GOOGLE_ID,
+			clientSecret: process.env.GOOGLE_SECRET,
+			callbackURL: process.env.GOOGLE_CALLBACK
+		},
+		function(accessToken, refreshToken, profile, done) {
+			var userData = {
+				email: profile.emails[0].value,
+				name: profile.displayName,
+				token: accessToken
+			};
+			done(null, userData);
+		}
+	)
+);
+
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
