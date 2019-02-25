@@ -2,6 +2,8 @@ const express = require('express')
 const session = require('express-session')
 const app = express()
 const https = require('https')
+const fs = require("fs")
+const pem = require("pem")
 const bodyParser = require('body-parser')
 const routes = require('./app/routes/appRoutes')
 const cors = require('cors')
@@ -9,6 +11,11 @@ require('dotenv').config()
 var passport = require("passport")
 var FacebookStrategy = require("passport-facebook").Strategy
 var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+
+var credentials = {
+  pfx: fs.readFileSync('./server.pfx'),
+  passphrase: process.env.SERVER_PASSCODE
+};
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -71,6 +78,8 @@ function ensureAuthenticated(req, res, next){
   res.redirect('/login')
 }
 
-app.listen(3001, () => console.log('Server running on port 3001'))
+var httpsServer = https.createServer(credentials, app)
+httpsServer.listen(3001, () => console.log('Server running on port 3001'));
+//app.listen(3001, () => console.log('Server running on port 3001'))
 
 routes(app)
