@@ -43,7 +43,7 @@ module.exports = function(app) {
         .get(passport.authenticate("google", { scope: ["profile", "email"] }))
 
     app.route('/auth/google/callback')
-        .get(passport.authenticate("google", { failureRedirect: "/", session: false }),
+        .get(passport.authenticate("google", { failureRedirect: "/login", session: false }),
             function(req, res) {
                 var token = req.user.token;
                 res.redirect("http://localhost:3000?token=" + token);
