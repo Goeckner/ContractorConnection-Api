@@ -46,7 +46,8 @@ module.exports = function(app) {
         .get(passport.authenticate("google", { failureRedirect: "/login", session: false }),
             function(req, res) {
                 var token = req.user.token;
-                res.redirect("http://localhost:3000?token=" + token);
+                var user = req.user.name;
+                res.redirect("http://localhost:3000?user=" + user + "&token=" + token);
         })
 
     app.route('/logout')
