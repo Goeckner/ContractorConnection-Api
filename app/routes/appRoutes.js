@@ -24,31 +24,32 @@ module.exports = function(app) {
     app.route('/trainers/filter')
         .post(react_app.get_filtered_inst)
 
-    ////////FACEBOOK ROUTES///////
-    app.route('/auth/facebook')
-        .get(passport.authenticate('facebook'))
+    // ////////FACEBOOK ROUTES///////
+    // app.route('/auth/facebook')
+    //     .get(passport.authenticate('facebook'))
 
-    app.route('/auth/facebook/callback')
-        .get(passport.authenticate('facebook', {
+    // app.route('/auth/facebook/callback')
+    //     .get(passport.authenticate('facebook', {
             
-            successRedirect: 'http://localhost:3000',
-            failureRedirect: '/login'
-        }),
-        function(req, res) {
-            res.redirect('/')
-        })
+    //         successRedirect: 'http://localhost:3000',
+    //         failureRedirect: '/login'
+    //     }),
+    //     function(req, res) {
+    //         res.redirect('/')
+    //     })
 
-    ////////GOOGLE ROUTES////////
-    app.route('/auth/google')
-        .get(passport.authenticate("google", { scope: ["profile", "email"] }))
+    ////////AUTH ROUTES////////
+    app.route('/auth')
+        .post(react_app.account_login)
 
-    app.route('/auth/google/callback')
-        .get(passport.authenticate("google", { failureRedirect: "/login", session: false }),
-            function(req, res) {
-                var token = req.user.token;
-                var user = req.user.name;
-                res.redirect("http://localhost:3000?user=" + user + "&token=" + token);
-        })
+    app.route('/auth/callback')
+        .post()
+        // .get(passport.authenticate("google", { failureRedirect: "/login", session: false }),
+        //     function(req, res) {
+        //         var token = req.user.token;
+        //         var user = req.user.name;
+        //         res.redirect("http://localhost:3000?user=" + user + "&token=" + token);
+        // })
 
     app.route('/logout')
         .get(function(req, res){
