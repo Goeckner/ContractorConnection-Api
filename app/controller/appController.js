@@ -1,6 +1,8 @@
 var User =  require("../modals/userModal")
 var Trainer = require("../modals/trainerModal")
 var Filter = require("../modals/filterModal")
+var Login = require("../modals/loginModal")
+var validator = require("email-validator");
 
 //////////USER CONTROLLERS//////////
 exports.get_all_users = function(req, res) {
@@ -79,5 +81,47 @@ exports.get_filtered_inst = function(req, res) {
 //////////ACCOUNT AUTHENTICATION////////////
 
 exports.account_login = function(req, res) {
-
+    var newlogin = new Login(req.body)
+    console.log(req.body)
+    if(newlogin.name && validator.validate(newlogin.email)){
+        Login.authUser(newlogin, function(err, userid){
+            if(userid == -1){
+                var new_user = {
+                    id: 0,
+                    name: newlogin.name,
+                    username: "NULL",
+                    password: "NULL",
+                    email: newlogin.email,
+                    isTrainer: false
+                }
+                var user_query = [[new_user.id, new_user.name, new_user.username, new_user.password, new_user.email, new_user.isTrainer]]
+                User.createUser(user_query, function(err, user) {
+                    if (err){
+                        res.send(err)
+                    }
+                    else{
+                        var usr = {
+                            id: user,
+                            new: true
+                        }
+                        res.json(usr)
+                    }
+                })
+            }
+            else{
+                var usr = {
+                    id: userid[0].id,
+                    new: false
+                }
+                res.json(usr)
+            }
+        })
+    }
+    else{
+        var failure = {
+            fail: true,
+            message: "Invalid name or email format"
+        }
+        res.json(failure)
+    }
 }
