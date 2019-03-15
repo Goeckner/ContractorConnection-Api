@@ -82,19 +82,10 @@ exports.get_filtered_inst = function(req, res) {
 
 exports.account_login = function(req, res) {
     var newlogin = new Login(req.body)
-    console.log(req.body)
     if(newlogin.name && validator.validate(newlogin.email)){
         Login.authUser(newlogin, function(err, userid){
             if(userid == -1){
-                var new_user = {
-                    id: 0,
-                    name: newlogin.name,
-                    username: "NULL",
-                    password: "NULL",
-                    email: newlogin.email,
-                    isTrainer: false
-                }
-                var user_query = [[new_user.id, new_user.name, new_user.username, new_user.password, new_user.email, new_user.isTrainer]]
+                var user_query = [[0, newlogin.name, "NULL", "NULL", newlogin.email, false]]
                 User.createUser(user_query, function(err, user) {
                     if (err){
                         res.send(err)
@@ -105,6 +96,7 @@ exports.account_login = function(req, res) {
                             new: true
                         }
                         res.json(usr)
+                        console.log(res)
                     }
                 })
             }
@@ -119,8 +111,8 @@ exports.account_login = function(req, res) {
     }
     else{
         var failure = {
-            fail: true,
-            message: "Invalid name or email format"
+            id: -1,
+            new: false
         }
         res.json(failure)
     }

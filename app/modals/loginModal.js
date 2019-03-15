@@ -16,7 +16,7 @@ Login.authUser = function authUser(newlogin, result){
             result(err, null)
         }
         else{
-            if(res == []){
+            if(res.constructor === Array && res.length == 0){
                 result(null, -1)
             }
             else{
