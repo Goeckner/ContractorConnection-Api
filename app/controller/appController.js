@@ -96,7 +96,6 @@ exports.account_login = function(req, res) {
                             new: true
                         }
                         res.json(usr)
-                        console.log(res)
                     }
                 })
             }
