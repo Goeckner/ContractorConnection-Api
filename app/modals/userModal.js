@@ -7,10 +7,11 @@ var User = function(user){
     this.password = user.password
     this.email = user.email
     this.isTrainer = user.isTrainer
+    this.profilePicURL = user.profilePicURL
 }
 
 User.createUser = function createUser(newUser, result){
-    sql.query("INSERT INTO users (id, name, username, password, email, isTrainer) VALUES (?)", newUser, function(err, res){
+    sql.query("INSERT INTO users (id, name, username, password, email, isTrainer, profilePicURL) VALUES (?)", newUser, function(err, res){
         if(err) {
             console.log("error: ", err);
             result(err, null);

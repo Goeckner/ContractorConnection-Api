@@ -17,7 +17,7 @@ exports.get_all_users = function(req, res) {
 
 exports.create_user = function(req, res) {
     var new_user = new User(req.body)
-    var user_query = [[new_user.id, new_user.name, new_user.username, new_user.password, new_user.email, new_user.isTrainer]]
+    var user_query = [[new_user.id, new_user.name, new_user.username, new_user.password, new_user.email, new_user.isTrainer, new_user.profilePicURL]]
 
     if(!new_user.name || !new_user.username || !new_user.password || !new_user.email){
         res.status(400).send({ error:true, message: "Incomplete trainer information" })
@@ -85,7 +85,7 @@ exports.account_login = function(req, res) {
     if(newlogin.name && validator.validate(newlogin.email)){
         Login.authUser(newlogin, function(err, userid){
             if(userid == -1){
-                var user_query = [[0, newlogin.name, "NULL", "NULL", newlogin.email, false]]
+                var user_query = [[0, newlogin.name, "NULL", "NULL", newlogin.email, false, newlogin.profilePicURL]]
                 User.createUser(user_query, function(err, user) {
                     if (err){
                         res.send(err)

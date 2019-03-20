@@ -6,6 +6,7 @@ var fullTrainer = require('./filterModal')
 var Login = function(login){
     this.name = login.name
     this.email = login.email
+    this.profilePicURL = login.profilePicURL
     this.newuser = true
 }
 
