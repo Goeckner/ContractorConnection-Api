@@ -83,5 +83,4 @@ Filter.getFilterInst = function getFilterInst(new_filter, result){
         }
     })
 }
-
-module.exports = Filter
+module.exports = Filter, fullTrainer
