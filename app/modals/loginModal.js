@@ -11,7 +11,7 @@ var Login = function(login){
 }
 
 Login.authUser = function authUser(newlogin, result){
-    sql.query("SELECT id FROM users WHERE email = ?", [[newlogin.email]], function(err, res){
+    sql.query("SELECT * FROM users WHERE email = ?", [[newlogin.email]], function(err, res){
         if(err) {
             console.log("error: ", err)
             result(err, null)

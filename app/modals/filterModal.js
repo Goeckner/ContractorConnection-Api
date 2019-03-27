@@ -16,6 +16,7 @@ var fullTrainer = function(fulltrainer){
     this.password = fulltrainer.password
     this.email = fulltrainer.email
     this.isTrainer = fulltrainer.isTrainer
+    this.profilePicURL = fullTrainer.profilePicURL
     this.address = fulltrainer.address
     this.isCertified = fulltrainer.isCertified
     this.fullDesc = fulltrainer.fullDesc

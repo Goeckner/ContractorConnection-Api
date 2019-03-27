@@ -1,6 +1,6 @@
 var User =  require("../modals/userModal")
 var Trainer = require("../modals/trainerModal")
-var Filter = require("../modals/filterModal")
+var {Filter, fullTrainer} = require("../modals/filterModal")
 var Login = require("../modals/loginModal")
 var validator = require("email-validator");
 
@@ -55,6 +55,24 @@ exports.create_instructor = function(req, res) {
     }
 }
 
+exports.get_trainer_by_id = function(req, res){
+    var id = req.params.instid
+
+    if(!id)
+    {
+        res.starus(400).send({error:true, message: "ID missing in fetch"})
+    }
+    else{
+        Trainer.getTrainerByID(id, function(err, inst){
+            console.log("Controller: getinstbyid")
+            if(err)
+                res.send(err);
+                console.log('res', inst)
+            res.send(inst)
+        })
+    }
+}
+
 exports.get_all_instructors = function(req, res) {
     Trainer.getAllTrainers(function(err, trainer){
         console.log("Controller: getAllUsers")
@@ -92,7 +110,7 @@ exports.account_login = function(req, res) {
                     }
                     else{
                         var usr = {
-                            id: user,
+                            info: user,
                             new: true
                         }
                         res.json(usr)
@@ -101,7 +119,7 @@ exports.account_login = function(req, res) {
             }
             else{
                 var usr = {
-                    id: userid[0].id,
+                    info: userid[0],
                     new: false
                 }
                 res.json(usr)
@@ -110,7 +128,7 @@ exports.account_login = function(req, res) {
     }
     else{
         var failure = {
-            id: -1,
+            info: -1,
             new: false
         }
         res.json(failure)

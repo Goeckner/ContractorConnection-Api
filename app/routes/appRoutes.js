@@ -16,6 +16,9 @@ module.exports = function(app) {
         .get(react_app.get_all_instructors)
         .post(react_app.create_instructor)
 
+    app.route('/trainers/:instid')
+        .get(react_app.get_trainer_by_id)
+
     // app.route('/trainers/:instid')
     //     .get(react_app.list_instructor_info)
     //     .post(react_app.update_instructor_info)

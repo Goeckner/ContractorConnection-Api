@@ -29,6 +29,19 @@ Trainer.createTrainer = function createTrainer(newTrainer, result){
     })
 }
 
+Trainer.getTrainerByID = function getTrainerByID(trainerID, result){
+    sql.query("SELECT * FROM users INNER JOIN trainers ON users.id = trainers.trainerID WHERE users.id = ?", trainerID, function(err, res){
+        if(err){
+            console.log("error: ", err)
+            result(err, null)
+        }
+        else{
+            console.log(res)
+            result(null, res)
+        }
+    })
+}
+
 Trainer.getAllTrainers = function getAllTrainers(result){
     sql.query("SELECT * FROM users INNER JOIN trainers ON users.id = trainers.trainerID", function(err, res){
         if(err){
