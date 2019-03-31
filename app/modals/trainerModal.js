@@ -14,6 +14,7 @@ var Trainer = function(trainer){
     this.shortDesc = trainer.shortDesc
     this.trainerID = trainer.trainerID
     this.rating = trainer.rating
+    this.numRating = trainer.numRating
 }
 
 Trainer.createTrainer = function createTrainer(newTrainer, result){

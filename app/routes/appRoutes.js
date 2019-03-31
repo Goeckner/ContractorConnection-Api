@@ -19,27 +19,13 @@ module.exports = function(app) {
     app.route('/trainers/:instid')
         .get(react_app.get_trainer_by_id)
 
-    // app.route('/trainers/:instid')
+    // app.route('/trainers/:instid')the witcher wallpaper
     //     .get(react_app.list_instructor_info)
     //     .post(react_app.update_instructor_info)
     //     .delete(react_app.delete_instructor)
 
     app.route('/trainers/filter')
         .post(react_app.get_filtered_inst)
-
-    // ////////FACEBOOK ROUTES///////
-    // app.route('/auth/facebook')
-    //     .get(passport.authenticate('facebook'))
-
-    // app.route('/auth/facebook/callback')
-    //     .get(passport.authenticate('facebook', {
-            
-    //         successRedirect: 'http://localhost:3000',
-    //         failureRedirect: '/login'
-    //     }),
-    //     function(req, res) {
-    //         res.redirect('/')
-    //     })
 
     ////////AUTH ROUTES////////
     app.route('/auth')
