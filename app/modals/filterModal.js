@@ -31,6 +31,7 @@ var fullTrainer = function(fulltrainer){
     this.trainerID = fulltrainer.trainerID
     this.rating = fulltrainer.rating
     this.numRating = fullTrainer.numRating
+    this.quizes = fullTrainer.quizes
 }
 
 //filters the full list of instructors with both ratings and distance
