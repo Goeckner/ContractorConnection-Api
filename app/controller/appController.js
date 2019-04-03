@@ -1,5 +1,6 @@
 var User =  require("../modals/userModal")
 var Trainer = require("../modals/trainerModal")
+var Classes = require("../modals/classesModal")
 var Filter = require("../modals/filterModal")
 var Login = require("../modals/loginModal")
 var validator = require("email-validator");
@@ -35,8 +36,9 @@ exports.create_user = function(req, res) {
 }
 
 //////////TRAINER CONTROLLERS//////////
+
 exports.create_instructor = function(req, res) {
-    var new_trainer = new Trainer(req.body)
+    var new_class = new Class(req.body)
     var trainer_query = [[new_trainer.address, new_trainer.isCertified, new_trainer.fullDesc, new_trainer.company, new_trainer.phone,
     new_trainer.city, new_trainer.state, new_trainer.zipcode, new_trainer.latitude, new_trainer.longitude, new_trainer.shortDesc,
     new_trainer.trainerID, new_trainer.rating, new_trainer.numRating]]
@@ -45,7 +47,7 @@ exports.create_instructor = function(req, res) {
         res.status(400).send({error:true, message: "Incomplete trainer information"})
     }
     else{
-        Trainer.createTrainer(trainer_query, function(err, trainer){
+        Class.createClass(trainer_query, function(err, trainer){
             if(err){
                 res.send(err)
             }
@@ -83,6 +85,64 @@ exports.get_all_instructors = function(req, res) {
         res.send(trainer);
     })
 }
+
+exports.get_all_classes = function(req, res) {
+    var id = req.params.instid
+
+    if(!id)
+    {
+        res.starus(400).send({error:true, message: "ID missing in fetch"})
+    }
+    else{
+        Classes.getAllClasses(id, function(err, classes){
+            console.log("Controller: getAllClasses")
+            if (err)
+                res.send(err);
+                console.log('res',classes);
+            res.send(classes);
+        })
+    }
+}
+
+
+exports.create_class = function(req, res) {
+    var new_class = new Classes(req.body)
+    var class_query = [[new_class.className, new_class.classDesc, new_class.trainerID]]
+
+    if(!new_class){
+        res.status(400).send({error:true, message: "Incomplete class information"})
+    }
+    else{
+        Classes.createClass(class_query, function(err, classData){
+            if(err){
+                res.send(err)
+            }
+            else{
+                res.json(classData)
+            }
+        })
+    }
+}
+
+exports.delete_classes = function(req, res) {
+    var id = req.params.instid
+
+    if(!id)
+    {
+        res.starus(400).send({error:true, message: "ID missing in fetch"})
+    }
+    else{
+        Classes.deleteClasses(id, function(err, result){
+            if(err){
+                res.send(err)
+            }
+            else{
+                res.json(result)
+            }
+        })
+    }
+}
+
 
 //////////FILTER CONTROLLERS//////////
 

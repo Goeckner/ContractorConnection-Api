@@ -27,6 +27,11 @@ module.exports = function(app) {
     app.route('/trainers/filter')
         .post(react_app.get_filtered_inst)
 
+    app.route('/classes/:instid')
+        .get(react_app.get_all_classes)
+        .post(react_app.create_class)
+        .delete(react_app.delete_classes)
+
     ////////AUTH ROUTES////////
     app.route('/auth')
         .post(react_app.account_login)
