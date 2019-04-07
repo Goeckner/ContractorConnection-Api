@@ -35,19 +35,39 @@ exports.create_user = function(req, res) {
     }
 }
 
+exports.make_user_inst = function(req, res) {
+    var id = req.params.userid
+
+    if(!id){
+        res.status(400).send({error:true, message: "Incomplete userid information"})
+    }
+    else{
+        User.changeToInst(id, function(err, user){
+            if(err){
+                res.send(err)
+            }
+            else{
+                res.json(user)
+            }
+        })
+    }
+    
+}
+
 //////////TRAINER CONTROLLERS//////////
 
 exports.create_instructor = function(req, res) {
-    var new_class = new Class(req.body)
+    var new_trainer = new Trainer(req.body)
     var trainer_query = [[new_trainer.address, new_trainer.isCertified, new_trainer.fullDesc, new_trainer.company, new_trainer.phone,
     new_trainer.city, new_trainer.state, new_trainer.zipcode, new_trainer.latitude, new_trainer.longitude, new_trainer.shortDesc,
-    new_trainer.trainerID, new_trainer.rating, new_trainer.numRating, new_trainer.quizes]]
+    new_trainer.trainerID, new_trainer.rating, new_trainer.numRatings, new_trainer.quizes]]
+    console.log("\n\n\n\n\n\n\nTEST HERE\n\n\n\n\n\n\n\n", trainer_query)
 
     if(!new_trainer){
         res.status(400).send({error:true, message: "Incomplete trainer information"})
     }
     else{
-        Class.createClass(trainer_query, function(err, trainer){
+        Trainer.createTrainer(trainer_query, function(err, trainer){
             if(err){
                 res.send(err)
             }
@@ -68,6 +88,24 @@ exports.get_trainer_by_id = function(req, res){
     else{
         Trainer.getTrainerByID(id, function(err, inst){
             console.log("Controller: getinstbyid")
+            if(err)
+                res.send(err);
+                console.log('res', inst)
+            res.send(inst)
+        })
+    }
+}
+
+exports.delete_instructor = function(req, res){
+    var id = req.params.instid
+
+    if(!id)
+    {
+        res.starus(400).send({error:true, message: "ID missing in fetch"})
+    }
+    else{
+        Trainer.deleteTrainerByID(id, function(err, inst){
+            console.log("Controller: delete inst")
             if(err)
                 res.send(err);
                 console.log('res', inst)
@@ -171,7 +209,15 @@ exports.account_login = function(req, res) {
                     }
                     else{
                         var usr = {
-                            info: user,
+                            info: {
+                                id: user,
+                                name: newlogin.name,
+                                username: "NULL",
+                                password: "NULL",
+                                email: newlogin.email,
+                                isTrainer: 0,
+                                profilePicURL: newlogin.profilePicURL
+                            },
                             new: true
                         }
                         res.json(usr)

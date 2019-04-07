@@ -14,7 +14,7 @@ var Trainer = function(trainer){
     this.shortDesc = trainer.shortDesc
     this.trainerID = trainer.trainerID
     this.rating = trainer.rating
-    this.numRating = trainer.numRating
+    this.numRatings = trainer.numRatings
     this.quizes = trainer.quizes
 }
 
@@ -33,6 +33,19 @@ Trainer.createTrainer = function createTrainer(newTrainer, result){
 
 Trainer.getTrainerByID = function getTrainerByID(trainerID, result){
     sql.query("SELECT * FROM users INNER JOIN trainers ON users.id = trainers.trainerID WHERE users.id = ?", trainerID, function(err, res){
+        if(err){
+            console.log("error: ", err)
+            result(err, null)
+        }
+        else{
+            console.log(res)
+            result(null, res)
+        }
+    })
+}
+
+Trainer.deleteTrainerByID = function deleteTrainerByID(trainerID, result){
+    sql.query("DELETE FROM trainers WHERE trainerID = ?", trainerID, function(err, res){
         if(err){
             console.log("error: ", err)
             result(err, null)

@@ -49,6 +49,19 @@ User.getUserbyID = function getUserbyID(UserID, result){
     })
 }
 
+User.changeToInst = function changeToInst(UserID, result){
+    sql.query("UPDATE users SET isTrainer = 1 WHERE id = ?", UserID, function(err,res){
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
+            console.log(res)
+            result(null, res)
+        }
+    })
+}
+
 //needs work, need better way to update user
 User.updateUserInfo = function updateUserInfo(id, existingUser, result){
     sql.query("UPDATE users SET ? where id = ?", [existingUser, id], function(err,res){
