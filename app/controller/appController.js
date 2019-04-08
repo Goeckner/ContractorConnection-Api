@@ -61,7 +61,6 @@ exports.create_instructor = function(req, res) {
     var trainer_query = [[new_trainer.address, new_trainer.isCertified, new_trainer.fullDesc, new_trainer.company, new_trainer.phone,
     new_trainer.city, new_trainer.state, new_trainer.zipcode, new_trainer.latitude, new_trainer.longitude, new_trainer.shortDesc,
     new_trainer.trainerID, new_trainer.rating, new_trainer.numRatings, new_trainer.quizes]]
-    console.log("\n\n\n\n\n\n\nTEST HERE\n\n\n\n\n\n\n\n", trainer_query)
 
     if(!new_trainer){
         res.status(400).send({error:true, message: "Incomplete trainer information"})

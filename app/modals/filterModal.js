@@ -40,7 +40,7 @@ Filter.getFilterInst = function getFilterInst(new_filter, result){
     var list
 
     //gets all trainers who meet the rating requirement
-    sql.query("SELECT * FROM users INNER JOIN trainers ON users.id = trainers.trainerID WHERE trainers.rating >= ?", [[new_filter.rating]], function(err,res){
+    sql.query("SELECT * FROM users INNER JOIN trainers ON users.id = trainers.trainerID WHERE trainers.rating >= ? AND trainers.isCertified = 1", [[new_filter.rating]], function(err,res){
         if(err) {
             console.log("error: ", err)
             result(err, null)

@@ -58,7 +58,7 @@ Trainer.deleteTrainerByID = function deleteTrainerByID(trainerID, result){
 }
 
 Trainer.getAllTrainers = function getAllTrainers(result){
-    sql.query("SELECT * FROM users INNER JOIN trainers ON users.id = trainers.trainerID", function(err, res){
+    sql.query("SELECT * FROM users INNER JOIN trainers ON users.id = trainers.trainerID WHERE trainers.isCertified = 1", function(err, res){
         if(err){
             console.log("error: ", err)
             result(err, null)
