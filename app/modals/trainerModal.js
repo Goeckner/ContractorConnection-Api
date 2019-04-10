@@ -31,6 +31,20 @@ Trainer.createTrainer = function createTrainer(newTrainer, result){
     })
 }
 
+Trainer.updateTrainerQuiz = function createTrainer(body, result){
+    var up = "UPDATE trainers SET quizes = " + body.num + " WHERE trainerID = " + body.id
+    sql.query(up, function(err, res){
+        if(err){
+            console.log("error: ", err)
+            result(err, null)
+        }
+        else{
+            console.log(res)
+            result(null, res)
+        }
+    })
+}
+
 Trainer.getTrainerByID = function getTrainerByID(trainerID, result){
     sql.query("SELECT * FROM users INNER JOIN trainers ON users.id = trainers.trainerID WHERE users.id = ?", trainerID, function(err, res){
         if(err){

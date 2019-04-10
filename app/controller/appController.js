@@ -82,11 +82,31 @@ exports.get_trainer_by_id = function(req, res){
 
     if(!id)
     {
-        res.starus(400).send({error:true, message: "ID missing in fetch"})
+        res.status(400).send({error:true, message: "ID missing in fetch"})
     }
     else{
         Trainer.getTrainerByID(id, function(err, inst){
             console.log("Controller: getinstbyid")
+            if(err)
+                res.send(err);
+                console.log('res', inst)
+            res.send(inst)
+        })
+    }
+}
+
+exports.update_quiz_num = function(req, res){
+    var body = {
+        id: req.body.id,
+        num: req.body.quizes
+    }
+    if(!body.id)
+    {
+        res.status(400).send({error:true, message: "ID missing in fetch"})
+    }
+    else{
+        Trainer.updateTrainerQuiz(body, function(err, inst){
+            console.log("Controller: update quizes")
             if(err)
                 res.send(err);
                 console.log('res', inst)
@@ -128,7 +148,7 @@ exports.get_all_classes = function(req, res) {
 
     if(!id)
     {
-        res.starus(400).send({error:true, message: "ID missing in fetch"})
+        res.status(400).send({error:true, message: "ID missing in fetch"})
     }
     else{
         Classes.getAllClasses(id, function(err, classes){
@@ -166,7 +186,7 @@ exports.delete_classes = function(req, res) {
 
     if(!id)
     {
-        res.starus(400).send({error:true, message: "ID missing in fetch"})
+        res.status(400).send({error:true, message: "ID missing in fetch"})
     }
     else{
         Classes.deleteClasses(id, function(err, result){

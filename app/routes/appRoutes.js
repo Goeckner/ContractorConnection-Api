@@ -22,6 +22,9 @@ module.exports = function(app) {
     app.route('/trainers/:instid')
         .get(react_app.get_trainer_by_id)
         .delete(react_app.delete_instructor)
+
+    app.route('/trainers/quizes')
+        .post(react_app.update_quiz_num)
     // app.route('/trainers/:instid')
     //     .get(react_app.list_instructor_info)
     //     .post(react_app.update_instructor_info)
