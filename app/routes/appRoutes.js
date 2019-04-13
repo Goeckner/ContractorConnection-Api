@@ -26,6 +26,9 @@ module.exports = function(app) {
     app.route('/trainers/quizes')
         .post(react_app.update_quiz_num)
 
+    app.route('/trainers/quizes/:instid')
+        .put(react_app.certify_instructor)
+
     app.route('/trainers/rating')
         .post(react_app.update_trainer_rating)
 

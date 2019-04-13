@@ -71,6 +71,19 @@ Trainer.updateRating = function updateRating(body, result){
     })
 }
 
+Trainer.certify = function certify(id, result){
+    sql.query("UPDATE trainers SET isCertified = 1 WHERE trainerID = ?", id, function(err, res){
+        if(err){
+            console.log("error: ", err)
+            result(err, null)
+        }
+        else{
+            console.log(res)
+            result(null, res)
+        }
+    })
+}
+
 Trainer.getTrainerByID = function getTrainerByID(trainerID, result){
     sql.query("SELECT * FROM users INNER JOIN trainers ON users.id = trainers.trainerID WHERE users.id = ?", trainerID, function(err, res){
         if(err){

@@ -142,6 +142,24 @@ exports.update_trainer_rating = function(req, res){
     }
 }
 
+exports.certify_instructor = function(req, res){
+    var id = req.params.instid
+
+    if(!id)
+    {
+        res.starus(400).send({error:true, message: "ID missing in fetch"})
+    }
+    else{
+        Trainer.certify(id, function(err, inst){
+            console.log("Contoller: certifly inst")
+            if(err)
+                res.send(err)
+                console.log('res', inst)
+            res.send(inst)
+        })
+    }
+}
+
 exports.delete_instructor = function(req, res){
     var id = req.params.instid
 
