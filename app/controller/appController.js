@@ -115,6 +115,33 @@ exports.update_quiz_num = function(req, res){
     }
 }
 
+exports.update_trainer_rating = function(req, res){
+    var body = {
+        id: req.body.id,
+        rate: req.body.rate
+    }
+    if(!body.id)
+    {
+        res.status(400).send({error:true, message: "ID missing in fetch"})
+    }
+    else{
+        Trainer.getRatingInfo(body, function(err, inst){
+            var newinfo = {
+                id: body.id,
+                numRatings: inst[0].numRatings+1,
+                rating: (((inst[0].numRatings * inst[0].rating) + body.rate) / (inst[0].numRatings+1))
+            }
+            Trainer.updateRating(newinfo, function(err, inst){
+                console.log("Controller: update rating")
+                if(err)
+                    res.send(err)
+                    console.log('res', inst)
+                res.send(inst)
+            })
+        })
+    }
+}
+
 exports.delete_instructor = function(req, res){
     var id = req.params.instid
 

@@ -45,6 +45,32 @@ Trainer.updateTrainerQuiz = function createTrainer(body, result){
     })
 }
 
+Trainer.getRatingInfo = function getRatingInfo(body, result){
+    sql.query("SELECT numRatings, rating FROM trainers WHERE trainerID = ?", body.id, function(err, res){
+        if(err){
+            console.log("error: ", err)
+            res
+        }
+        else{
+            console.log(res)
+            result(null, res)
+        }
+    })
+}
+
+Trainer.updateRating = function updateRating(body, result){
+    sql.query("UPDATE trainers SET numRatings = " + body.numRatings + ", rating = " + body.rating + " WHERE trainerID = ?", body.id, function(err, res){
+        if(err){
+            console.log("error: ", err)
+            result(err, null)
+        }
+        else{
+            console.log(res)
+            result(null, res)
+        }
+    })
+}
+
 Trainer.getTrainerByID = function getTrainerByID(trainerID, result){
     sql.query("SELECT * FROM users INNER JOIN trainers ON users.id = trainers.trainerID WHERE users.id = ?", trainerID, function(err, res){
         if(err){
